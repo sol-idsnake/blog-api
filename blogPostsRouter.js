@@ -15,11 +15,22 @@ router.get('/posts', (req, res) => {
 	BlogPost
 		.find()
 		.then(posts => {
-			res.json(posts.map(posts => posts.serialize()))
+			res.json(posts.map(post => post.serialize()))
 		})
 		.catch(err => {
 			console.error(err)
 			res.status(500).json({ message: 'Internal server error' })
+		})
+})
+
+// 5b1fc5422691867a687f1d82
+router.get('/posts/:id', (req, res) => {
+	BlogPost
+		.findById(req.params.id)
+		.then(post => {
+			console.log(post)
+			const postjson = post.serialize()
+			res.json(postjson)
 		})
 })
 

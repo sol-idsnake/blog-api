@@ -1,4 +1,3 @@
-const uuid = require('uuid');
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
@@ -27,7 +26,9 @@ blogPostsSchema.methods.serialize = function() {
   }
 }
 
-const BlogPost = mongoose.model('BlogPosts', blogPostsSchema)
+// first arg passed to model is capital and singular, whereas mongo looks for the same name in plural and 
+// non-capitalized in the collections. E.G 'POST', but the collections name is 'posts'
+const BlogPost = mongoose.model('Post', blogPostsSchema)
 
 
 module.exports = {BlogPost}

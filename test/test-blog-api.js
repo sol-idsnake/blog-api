@@ -18,7 +18,7 @@ describe('Blog Api', function() {
 
 	it('should list items on GET', function() {
 		return chai.request(app)
-			.get('/blog-posts')
+			.get('/posts')
 			.then(function(res) {
 		        expect(res).to.have.status(200);
 		        expect(res).to.be.json;
@@ -33,9 +33,9 @@ describe('Blog Api', function() {
 	})
 
 	it('should create items on POST', function() {
-		const newItem = {title: 'A stellar day', content: 'When you get up in the morning to have a stellar day...', author: 'me', publishDate: Date.now()}
+		const newItem = {title: 'A stellar day', content: 'When you get up in the morning to have a stellar day...', author: 'me', created: Date.now()}
 		return chai.request(app)
-			.post('/blog-posts')
+			.post('/posts')
 			.send(newItem)
 			.then(function(res){
 				expect(res).to.have.status(201);
@@ -43,13 +43,13 @@ describe('Blog Api', function() {
 				expect(res.body).to.be.a('object');
 				expect(res.body).to.include.keys('title', 'content', 'author');
 				expect(res.body.id).to.not.equal(null);	
-				expect(res.body).to.deep.equal(Object.assign(newItem, {id: res.body.id, publishDate: res.body.publishDate}));
+				expect(res.body).to.deep.equal(Object.assign(newItem, {id: res.body.id, created: res.body.created}));
 			})
 	})
 
 	it('should update items on PUT', function() {
 		return chai.request(app)
-			.get('/blog-posts')
+			.get('/posts')
 			.then(function(res) {
 				const updateData = Object.assign(res.body[0], {
 					title: 'A mockingbird',
@@ -58,7 +58,7 @@ describe('Blog Api', function() {
 					publishDate: Date.now()
 				})
 				return chai.request(app)
-					.put(`/blog-posts/${updateData.id}`)
+					.put(`/posts/${updateData.id}`)
 					.send(updateData)
 			})
 			.then(function(res) {
@@ -69,10 +69,10 @@ describe('Blog Api', function() {
 
 	it('should delete an item on DELETE', function() {
 		return chai.request(app)
-		.get('/blog-posts')
+		.get('/posts')
 		.then(function(res) {
 			return chai.request(app)
-				.delete(`/blog-posts/${res.body[0].id}`)
+				.delete(`/posts/${res.body[0].id}`)
 		})
 	})
 })

@@ -5,8 +5,8 @@ const app = express();
 const blogPostsRouter = require('./blogPostsRouter')
 const mongoose = require('mongoose')
 const morgan = require('morgan');
-const { BlogPost } = require('./models')
 const { PORT, DATABASE_URL } = require('./config')
+const { BlogPost } = require('./models')
 
 mongoose.Promise = global.Promise
 
@@ -32,7 +32,7 @@ let server;
 // our server, since we'll be dealing with promises there.
 function runServer(databaseUrl, port = PORT) {
   return new Promise((resolve, reject) => {
-    mongoose.connect(databaseUrl, err => {
+    return mongoose.connect(databaseUrl, err => {
       if (err) {
         return reject(err)
       }

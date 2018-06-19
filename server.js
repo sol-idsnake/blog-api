@@ -32,7 +32,7 @@ let server;
 // our server, since we'll be dealing with promises there.
 function runServer(databaseUrl, port = PORT) {
   return new Promise((resolve, reject) => {
-    return mongoose.connect(databaseUrl, err => {
+    mongoose.connect(databaseUrl, err => {
       if (err) {
         return reject(err)
       }
